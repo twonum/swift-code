@@ -15,7 +15,14 @@ const DeploySuccessPage = () => {
   const handleCopy = () => {
     navigator.clipboard.writeText(DEPLOY_URL).then(() => {
       setCopied(true);
+
+      // Reset copied state after 2 seconds
       setTimeout(() => setCopied(false), 2000);
+
+      // Redirect after 6 seconds
+      setTimeout(() => {
+        router.back(); // Navigates to the previous page
+      }, 6000);
     });
   };
 

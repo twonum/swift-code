@@ -129,7 +129,8 @@ function Hero() {
         messages: [msg],
       });
       console.log("Workspace ID:", workspaceId);
-      router.push(`/workspace/${workspaceId}`);
+      // Append ?new=true so that middleware bypasses ownership check for this first load
+      router.push(`/workspace/${workspaceId}?new=true`);
     } catch (error) {
       console.error("Error creating workspace:", error);
     }

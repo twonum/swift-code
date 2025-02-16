@@ -5,7 +5,7 @@ import ChatView from "@/components/custom/ChatView";
 import CodeView from "@/components/custom/CodeView";
 
 function Workspace() {
-  // Container fade-in variant remains the same.
+  // Container fade-in variant
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -18,25 +18,13 @@ function Workspace() {
     },
   };
 
-  // Updated item variant with extreme entry animation using blur and box-shadow.
+  // Item variant: simple fade-in, no shift or scale
   const itemVariants = {
-    hidden: {
-      opacity: 0,
-      filter: "blur(10px)",
-      boxShadow: "0 0 20px #ADFA1D",
-    },
-    visible: {
-      opacity: 1,
-      filter: "blur(0px)",
-      boxShadow: "0 0 5px #ADFA1D",
-      transition: {
-        duration: 1,
-        ease: "easeInOut",
-      },
-    },
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: 0.5 } },
   };
 
-  // Minimal border animation: border color cycles between #ADFA1D and white.
+  // Minimal border animation: border color cycles between #ADFA1D and white
   const borderAnimation = {
     borderColor: ["#ADFA1D", "#ffffff", "#ADFA1D"],
     transition: {

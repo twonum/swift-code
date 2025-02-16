@@ -45,7 +45,6 @@ const dialogVariants = {
   },
 };
 
-// Enhanced inner item variants with extra offset and rotation
 const itemVariants = {
   hidden: { opacity: 0, x: -50, y: 20, rotate: -15 },
   visible: {
@@ -57,7 +56,6 @@ const itemVariants = {
   },
 };
 
-// Pulse effect for the lookup heading text
 const pulseTitle = {
   animate: {
     textShadow: [
@@ -73,7 +71,6 @@ const pulseTitle = {
   },
 };
 
-// Main heading "SwiftCode" variants for an eye-catching reveal
 const mainHeadingVariants = {
   hidden: { opacity: 0, filter: "blur(8px)", scale: 0.7, rotate: -15 },
   visible: {
@@ -84,7 +81,6 @@ const mainHeadingVariants = {
     transition: { duration: 1.2, ease: "easeOut" },
   },
 };
-
 function SignInDialog({ openDialog, closeDialog }) {
   const { userDetail, setUserDetail } = useContext(UserDetailsContext);
   const CreateUser = useMutation(api.users.CreateUser);
@@ -104,7 +100,10 @@ function SignInDialog({ openDialog, closeDialog }) {
         uid: uuid4(),
       });
       if (typeof window !== "undefined") {
+        // Store the full user object in localStorage.
         localStorage.setItem("user", JSON.stringify(user));
+        // Set a cookie storing only the user's email, with encoding to ensure safe characters.
+        document.cookie = `auth-token=${encodeURIComponent(user.email)}; path=/`;
       }
       setUserDetail(userInfo?.data);
       closeDialog(false);
@@ -123,10 +122,8 @@ function SignInDialog({ openDialog, closeDialog }) {
             animate="visible"
             exit="exit"
           >
-            {/* Compact and dramatic content */}
             <DialogContent className="p-6 max-w-3xl">
               <DialogHeader>
-                {/* Main compact heading "SwiftCode" */}
                 <motion.div
                   variants={mainHeadingVariants}
                   whileHover={{ scale: 1.05, rotate: 2 }}
@@ -139,7 +136,6 @@ function SignInDialog({ openDialog, closeDialog }) {
                     SwiftCode
                   </h1>
                 </motion.div>
-                {/* Lookup heading with pulse effect */}
                 <motion.div variants={itemVariants} {...pulseTitle}>
                   <DialogTitle className="text-2xl font-bold text-center">
                     {Lookup.SIGNIN_HEADING}

@@ -34,9 +34,15 @@ function SideBarFooter() {
       : { name: "Sign In", icon: LogIn },
   ];
   const handleSignOut = () => {
-    localStorage.removeItem("user"); // Clear stored user data
-    setUserDetail(null); // Update context
-    window.location.reload(); // Reload the page
+    // Clear stored user data in localStorage.
+    localStorage.removeItem("user");
+    // Clear the auth-token cookie by setting an expired date.
+    document.cookie =
+      "auth-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+    // Update the user context.
+    setUserDetail(null);
+    // Optionally reload the page.
+    window.location.reload();
   };
 
   const handleSignIn = () => {

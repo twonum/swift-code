@@ -104,27 +104,11 @@ const StunningLoader = () => {
             box-shadow: 0 0 10px #adfa1d;
           }
         }
-        // /* Loader Icon */
-        // .loader-icon {
-        //   animation: spinLoader 2s linear infinite;
-        //   height: 80px;
-        //   width: 80px;
-        //   color: #adfa1d;
-        //   margin-bottom: 1rem;
-        // }
-        // @keyframes spinLoader {
-        //   from {
-        //     transform: rotate(0deg);
-        //   }
-        //   to {
-        //     transform: rotate(360deg);
-        //   }
-        // }
         /* Loading Text */
         .loading-text {
           font-size: 2rem;
           font-weight: bold;
-          color: black;
+          color: #adfa1d;
           margin-bottom: 2rem;
           position: relative;
           overflow: hidden;

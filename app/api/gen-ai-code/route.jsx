@@ -1,5 +1,4 @@
 import { GenAiCode } from "@/configs/AiModel";
-import { error } from "console";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
@@ -7,9 +6,10 @@ export async function POST(req) {
 
   try {
     const result = await GenAiCode.sendMessage(prompt);
-    const resp = result.response.text();
+    const resp = await result.response.text(); // ensure await if it's a promise
     return NextResponse.json(JSON.parse(resp));
   } catch (e) {
-    return NextResponse.json({ error: resp });
+    // Return the error message from the caught exception
+    return NextResponse.json({ error: e.toString() });
   }
 }

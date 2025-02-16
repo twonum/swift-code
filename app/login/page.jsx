@@ -40,7 +40,6 @@ const containerVariants = {
   },
 };
 
-// Variants for inner items.
 const itemVariants = {
   hidden: { opacity: 0, x: -50, y: 20, rotate: -15 },
   visible: {
@@ -52,7 +51,6 @@ const itemVariants = {
   },
 };
 
-// Pulse effect for the lookup heading text.
 const pulseTitle = {
   animate: {
     textShadow: [
@@ -68,7 +66,6 @@ const pulseTitle = {
   },
 };
 
-// Main heading variants.
 const mainHeadingVariants = {
   hidden: { opacity: 0, filter: "blur(8px)", scale: 0.7, rotate: -15 },
   visible: {
@@ -80,7 +77,6 @@ const mainHeadingVariants = {
   },
 };
 
-// Background floating particles.
 const FloatingParticle = ({ left, delay, size }) => (
   <motion.div
     className="absolute rounded-full bg-[#adfa1d]"
@@ -91,7 +87,6 @@ const FloatingParticle = ({ left, delay, size }) => (
   />
 );
 
-// Pulsating overlay lines.
 const PulsatingOverlay = () => (
   <motion.div
     className="absolute inset-0 pointer-events-none"
@@ -111,7 +106,6 @@ const PulsatingOverlay = () => (
     }}
   />
 );
-
 function LoginPage() {
   const { userDetail, setUserDetail } = useContext(UserDetailsContext);
   const CreateUser = useMutation(api.users.CreateUser);
@@ -133,15 +127,17 @@ function LoginPage() {
         uid: uuid4(),
       });
       if (typeof window !== "undefined") {
+        // Save the full user object in localStorage.
         localStorage.setItem("user", JSON.stringify(user));
+        // Store only the user's email in the cookie.
+        document.cookie = `auth-token=${user.email}; path=/`;
       }
       setUserDetail(userInfo?.data);
-      window.location.reload();
+      router.push("/");
     },
     onError: (errorResponse) => console.log(errorResponse),
   });
 
-  // If user exists, button simply routes to home.
   const handleButtonClick = () => {
     if (userDetail) {
       router.push("/");
@@ -152,14 +148,12 @@ function LoginPage() {
 
   return (
     <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden p-4">
-      {/* Background Animations */}
       <FloatingParticle left="5%" delay={0} size={15} />
       <FloatingParticle left="30%" delay={1} size={20} />
       <FloatingParticle left="60%" delay={0.5} size={12} />
       <FloatingParticle left="85%" delay={1.2} size={18} />
       <FloatingParticle left="40%" delay={0.8} size={10} />
       <PulsatingOverlay />
-
       <AnimatePresence>
         <motion.div
           variants={containerVariants}

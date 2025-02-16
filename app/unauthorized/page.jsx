@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-export default function NotFoundPage() {
+export default function Unauthorized() {
   const router = useRouter();
 
   // Optional auto-redirect after 10 seconds
@@ -15,13 +15,12 @@ export default function NotFoundPage() {
   }, [router]);
 
   return (
-    <div className="not-found-container mt-32">
-      <div className="not-found-inner">
-        <h1 className="error-code">404</h1>
-        <h2 className="error-message">Page Not Found</h2>
+    <div className="unauthorized-container mt-32">
+      <div className="unauthorized-inner">
+        <h1 className="error-code">401</h1>
+        <h2 className="error-message">Unauthorized</h2>
         <p className="error-description">
-          The page you are looking for might have been removed or is temporarily
-          unavailable.
+          You are not authorized to view this page.
         </p>
         <Link
           href="/"
@@ -71,7 +70,7 @@ export default function NotFoundPage() {
       </div>
       <style jsx>{`
         /* Container Styles */
-        .not-found-container {
+        .unauthorized-container {
           position: fixed;
           inset: 0;
           background: linear-gradient(to bottom, #000, #adfa1d78);
@@ -82,7 +81,7 @@ export default function NotFoundPage() {
           overflow: hidden;
           font-family: sans-serif;
         }
-        .not-found-inner {
+        .unauthorized-inner {
           position: relative;
           padding: 4rem;
           border: 3px solid #adfa1d;
@@ -316,7 +315,7 @@ export default function NotFoundPage() {
             transform: translate(0, 0);
           }
         }
-        /* Underline on Hover for 404 Code */
+        /* Underline on Hover for 401 Code */
         .error-code:after {
           content: "";
           position: absolute;

@@ -33,12 +33,16 @@ function Header() {
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
-
   const handleSignOut = () => {
-    localStorage.removeItem("user"); // Clear stored user data
-    setUserDetail(null); // Update context
-    setMenuOpen(false); // Close the menu
-    window.location.reload(); // Reload the page
+    // Clear stored user data in localStorage.
+    localStorage.removeItem("user");
+    // Clear the auth-token cookie by setting an expired date.
+    document.cookie =
+      "auth-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+    // Update the user context.
+    setUserDetail(null);
+    // Optionally reload the page.
+    window.location.reload();
   };
 
   const handleCloseMenu = () => {
