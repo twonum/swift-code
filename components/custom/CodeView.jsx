@@ -15,11 +15,13 @@ import Prompt from "@/data/Prompt";
 import { useConvex, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useParams } from "next/navigation";
-import { Loader, LockIcon } from "lucide-react";
+import { Code, Download, Loader, LockIcon, Send, View } from "lucide-react";
 import { countToken } from "./ChatView";
 import { UserDetailsContext } from "@/context/UserDetailsContext";
 import { Button } from "../ui/button";
 import SignInDialog from "./SignInDialog";
+import SandpankPreviewClient from "./SandpankPreviewClient";
+import { ActionContext } from "@/context/ActionContext";
 
 // ErrorBoundary to catch any render errors
 class ErrorBoundary extends React.Component {
@@ -47,8 +49,17 @@ function CodeView() {
   const [files, setFiles] = useState(Lookup?.DEFAULT_FILE || {});
   const [loading, setLoading] = useState(false);
 
+  const { action, setAction } = useContext(ActionContext);
+
+  const onActionButtonClick = (action) => {
+    setAction({
+      actionType: action,
+      timeStamp: Date.now(),
+    });
+  };
+
   const { messages } = useContext(MessagesContext);
-  const { userDetail } = useContext(UserDetailsContext);
+  const { userDetail, setUserDetail } = useContext(UserDetailsContext);
   const [openDialog, setOpenDialog] = useState(false); // Add state for dialog
 
   const convex = useConvex();
@@ -88,7 +99,9 @@ function CodeView() {
       );
     }
   }, [fetchWorkspaceFiles]);
-
+  useEffect(() => {
+    setActiveTab("preview");
+  }, [action]);
   // Generate AI code when a new user message is added
   useEffect(() => {
     try {
@@ -137,6 +150,7 @@ function CodeView() {
       const currentToken = Number(userDetail?.token) || 0;
       const updatedToken = currentToken - Number(tokenUsage);
       if (userDetail?._id) {
+        setUserDetail((prev) => ({ ...prev, token: updatedToken }));
         await updateTokensMutation({
           userId: userDetail._id,
           token: updatedToken,
@@ -157,27 +171,53 @@ function CodeView() {
       <div className="relative">
         {/* Header with tab selectors */}
         <div className="bg-[#ADFA1D] w-full p-2 border">
-          <div className="text-white flex items-center flex-wrap shrink-0 p-1 justify-center bg-black w-[140px] gap-3">
-            <h2
-              onClick={() => setActiveTab("code")}
-              className={`text-sm cursor-pointer ${
-                activeTab === "code"
-                  ? "text-[#ADFA1D] bg-[#ADFA1D] bg-opacity-25 p-1 px-2"
-                  : ""
-              }`}
-            >
-              Code
-            </h2>
-            <h2
-              onClick={() => setActiveTab("preview")}
-              className={`text-sm cursor-pointer ${
-                activeTab === "preview"
-                  ? "text-[#ADFA1D] bg-[#ADFA1D] bg-opacity-25 p-1 px-2"
-                  : ""
-              }`}
-            >
-              Preview
-            </h2>
+          <div className="flex items-center justify-between">
+            {/* Left Group: Code and Preview */}
+            <div className="flex items-center bg-black">
+              <Button
+                variant="secondary"
+                onClick={() => setActiveTab("code")}
+                className={`font-thin ${
+                  activeTab === "code"
+                    ? "text-[#ADFA1D] bg-[#ADFA1D] bg-opacity-25"
+                    : "text-white"
+                }`}
+              >
+                Code
+                <Code className="h-5 w-5 ml-1" />
+              </Button>
+              <Button
+                onClick={() => setActiveTab("preview")}
+                variant="secondary"
+                className={`font-thin ${
+                  activeTab === "preview"
+                    ? "text-[#ADFA1D] bg-[#ADFA1D] bg-opacity-25"
+                    : "text-white"
+                }`}
+              >
+                Preview
+                <View className="h-5 w-5 ml-1" />
+              </Button>
+            </div>
+            {/* Right Group: Download and Deploy */}
+            <div className="flex items-center bg-black ">
+              <Button
+                onClick={() => onActionButtonClick("export")}
+                className="font-thin"
+                variant="secondary"
+              >
+                Export
+                <Download className="h-5 w-5 ml-1" />
+              </Button>
+              <Button
+                onClick={() => onActionButtonClick("deploy")}
+                className="font-thin"
+                variant="secondary"
+              >
+                Deploy
+                <Send className="h-5 w-5 ml-1" />
+              </Button>
+            </div>
           </div>
         </div>
 
@@ -208,10 +248,9 @@ function CodeView() {
                 </div>
               ) : (
                 // Preview view: fills the container exactly
-                <SandpackPreview
-                  style={{ height: "100%", width: "100%" }}
-                  showNavigator
-                />
+                <>
+                  <SandpankPreviewClient />
+                </>
               )}
             </SandpackLayout>
           </div>

@@ -3,6 +3,7 @@ import "./globals.css";
 import Provider from "./provider";
 import ConvexClientProvider from "./ConvexClientProvider";
 import Footer from "./../components/ui/Footer";
+import { Toaster } from "sonner";
 
 export const metadata = {
   title: "SwiftCode",
@@ -34,7 +35,7 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <ConvexClientProvider>
-          <Provider>{children}</Provider>
+          <Provider>{children}<Toaster /></Provider>
           <Footer />
         </ConvexClientProvider>
       </body>

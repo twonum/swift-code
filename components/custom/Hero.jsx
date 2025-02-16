@@ -117,6 +117,10 @@ function Hero() {
       setOpenDialog(true);
       return;
     }
+    if (userDetail?.token < 10) {
+      toast.error("You don't have enough tokens to generate a response.");
+      return;
+    }
     const msg = { role: "user", content: input };
     setMessages(msg);
     try {

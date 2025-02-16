@@ -9,6 +9,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useConvex, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { ActionContext } from "@/context/ActionContext";
 
 // Lazy load heavy components for faster initial load
 const Header = dynamic(() => import("@/components/custom/Header"), {
@@ -20,6 +21,7 @@ const AppSideBar = dynamic(() => import("@/components/custom/AppSideBar"), {
 
 function Provider({ children }) {
   const [messages, setMessages] = useState([]);
+  const [action, setAction] = useState();
   const convex = useConvex();
 
   // Retrieve user info from localStorage once.
@@ -47,22 +49,24 @@ function Provider({ children }) {
         value={{ userDetail, setUserDetail: () => {} }}
       >
         <MessagesContext.Provider value={{ messages, setMessages }}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <Suspense fallback={<div>Loading header...</div>}>
-              <Header />
-            </Suspense>
-            <SidebarProvider defaultOpen={false}>
-              <Suspense fallback={<div>Loading sidebar...</div>}>
-                <AppSideBar />
+          <ActionContext.Provider value={{ action, setAction }}>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <Suspense fallback={<div>Loading header...</div>}>
+                <Header />
               </Suspense>
-              {children}
-            </SidebarProvider>
-          </ThemeProvider>
+              <SidebarProvider defaultOpen={false}>
+                <Suspense fallback={<div>Loading sidebar...</div>}>
+                  <AppSideBar />
+                </Suspense>
+                {children}
+              </SidebarProvider>
+            </ThemeProvider>
+          </ActionContext.Provider>
         </MessagesContext.Provider>
       </UserDetailsContext.Provider>
     </GoogleOAuthProvider>

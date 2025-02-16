@@ -9,13 +9,21 @@ import Lookup from "@/data/Lookup";
 import Prompt from "@/data/Prompt";
 import axios from "axios";
 import { useConvex, useMutation } from "convex/react";
-import { ArrowRight, Loader, Menu, LockIcon } from "lucide-react";
+import {
+  ArrowRight,
+  Loader,
+  Menu,
+  LockIcon,
+  Sidebar,
+  SidebarClose,
+} from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import { useSidebar } from "../ui/sidebar";
 import { Button } from "../ui/button";
 import SignInDialog from "./SignInDialog";
+import { toast } from "sonner";
 
 // ErrorBoundary component to catch render errors
 class ErrorBoundary extends React.Component {
@@ -49,11 +57,10 @@ export const countToken = (inputText) => {
 };
 
 const chatContainerVariants = {
-  hidden: { opacity: 0, filter: "blur(10px)", boxShadow: "0 0 20px #ADFA1D" },
+  hidden: { opacity: 0, filter: "blur(10px)" },
   visible: {
     opacity: 1,
     filter: "blur(0px)",
-    boxShadow: "0 0 5px #ADFA1D",
     transition: { duration: 1, when: "beforeChildren", staggerChildren: 0.1 },
   },
 };
@@ -150,7 +157,7 @@ const ChatInput = ({
   try {
     return (
       <motion.div
-        className="flex items-end gap-2 mt-10"
+        className="flex items-end gap-2 mt-10 border border-t-[#ADFA1D]"
         variants={inputVariants}
         initial="hidden"
         animate="visible"
@@ -187,7 +194,7 @@ const ChatInput = ({
 function ChatView() {
   const { id } = useParams();
   const convex = useConvex();
-  const { userDetail } = useContext(UserDetailsContext);
+  const { userDetail, setUserDetail } = useContext(UserDetailsContext);
   const { messages, setMessages } = useContext(MessagesContext);
   const { toggleSidebar } = useSidebar();
   const [openDialog, setOpenDialog] = useState(false); // Add state for dialog
@@ -275,6 +282,7 @@ function ChatView() {
       const tokenUsage = countToken(JSON.stringify(aiResponse));
       const currentToken = Number(userDetail?.token) || 0;
       const updatedToken = currentToken - tokenUsage;
+      setUserDetail((prev) => ({ ...prev, token: updatedToken }));
       await updateTokensMutation({
         userId: userDetail?._id,
         token: updatedToken,
@@ -288,6 +296,10 @@ function ChatView() {
 
   // Handler for generating a new message
   const onGenerate = (input) => {
+    if (userDetail?.token < 10) {
+      toast.error("You don't have enough tokens to generate a response.");
+      return;
+    }
     try {
       if (!input.trim()) return;
       setMessages((prev) => [
@@ -306,14 +318,15 @@ function ChatView() {
         {userDetail && (
           <motion.div
             onClick={toggleSidebar}
-            className="toggle-sidebar justify-items-center cursor-pointer transform -translate-y-1/2 p-1 border border-[#ADFA1D] rounded transition-colors duration-300 hover:bg-lime-800"
+            className="toggle-sidebar justify-items-center group p-1 border border-[#ADFA1D] text-[#ADFA1D] font-semibold cursor-pointer rounded-none transition-colors duration-300 hover:bg-[#ADFA1D] hover:text-black"
             variants={toggleVariants}
             initial="hidden"
             animate="visible"
           >
-            <Menu className="w-auto h-5 text-[#ADFA1D]" />
+            <SidebarClose className="w-auto h-5 text-[#ADFA1D] group-hover:text-black" />
           </motion.div>
         )}
+
         <motion.div
           className="max-w-screen-md mx-auto p-4 flex flex-col"
           variants={chatContainerVariants}
