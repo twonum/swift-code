@@ -9,6 +9,7 @@ import { api } from "@/convex/_generated/api";
 import { UserDetailsContext } from "@/context/UserDetailsContext";
 import Lookup from "@/data/Lookup";
 import { Button } from "@/components/ui/button";
+import StunningLoader from "@/components/StunningLoader";
 
 // Container variants for dramatic entry/exit.
 const containerVariants = {
@@ -171,11 +172,7 @@ function LoginPage() {
 
   // After reload, if the flag is present, show the "Signing In..." state.
   if (postReloadLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-black">
-        <h1 className="text-3xl text-white">Signing In...</h1>
-      </div>
-    );
+    return <StunningLoader />;
   }
 
   return (
