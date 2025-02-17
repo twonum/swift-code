@@ -272,7 +272,7 @@ function GetStartedPage() {
               className="text-6xl font-extrabold"
               style={{ color: "#ADFA1D" }}
             >
-              SwiftCode
+              SwiftCodee
             </h1>
           </motion.div>
           {/* App Description */}
@@ -286,7 +286,7 @@ function GetStartedPage() {
               projects in seconds.
             </h2>
             <p className="mt-4 text-white text-xl max-w-3xl mx-auto">
-              SwiftCode harnesses advanced AI to generate high-quality,
+              SwiftCodee harnesses advanced AI to generate high-quality,
               production-ready code with lightning speed. Whether you're a
               startup founder or a seasoned developer, experience the future of
               rapid development.

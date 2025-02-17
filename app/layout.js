@@ -6,9 +6,9 @@ import Footer from "./../components/ui/Footer";
 import { Toaster } from "sonner";
 
 export const metadata = {
-  title: "SwiftCode",
+  title: "SwiftCodee",
   description:
-    "SwiftCode is your gateway to rapid, innovative full-stack web development. Prompt, run, edit, and deploy cutting-edge web apps with an intuitive, all-in-one platform that transforms ideas into digital masterpieces.",
+    "SwiftCodee is your gateway to rapid, innovative full-stack web development. Prompt, run, edit, and deploy cutting-edge web apps with an intuitive, all-in-one platform that transforms ideas into digital masterpieces.",
 };
 
 export default function RootLayout({ children }) {

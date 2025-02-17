@@ -200,7 +200,7 @@ function LoginPage() {
               className="text-5xl font-extrabold text-center"
               style={{ color: "#ADFA1D" }}
             >
-              SwiftCode
+              SwiftCodee
             </h1>
           </motion.div>
           <motion.div variants={itemVariants} {...pulseTitle} className="mb-4">

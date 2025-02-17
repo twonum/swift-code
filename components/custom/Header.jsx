@@ -78,7 +78,7 @@ function Header() {
             href="/"
             className="relative text-[#8cba35] inline-block group brand-link"
           >
-            SwiftCode
+            SwiftCodee
             <span className="absolute left-0 -bottom-1 h-0.5 w-full bg-current transform scale-x-0 origin-right transition-transform duration-300 ease-out group-hover:scale-x-100"></span>
           </Link>
         </div>

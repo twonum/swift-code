@@ -25,7 +25,7 @@ function AppSideBar() {
           href="/"
           className="sidebar-brand text-4xl font-bold text-[#ADFA1D] transition-all duration-700 ease-in-out hover:text-[#a6ff00bc] text-center"
         >
-          SwiftCode
+          SwiftCodee
         </a>
         <Button
           onClick={() => {

@@ -1,10 +1,10 @@
-# SwiftCode
+# SwiftCodee
 
-SwiftCode is an innovative, real-time chat and workspace app designed to help you build, collaborate, and code—all while enjoying stunning, extreme animations and a smooth user experience. With integrated Google authentication, dynamic workspaces, and real-time updates powered by Convex, SwiftCode makes coding and collaboration fun, engaging, and visually captivating.
+SwiftCodee is an innovative, real-time chat and workspace app designed to help you build, collaborate, and code—all while enjoying stunning, extreme animations and a smooth user experience. With integrated Google authentication, dynamic workspaces, and real-time updates powered by Convex, SwiftCodee makes coding and collaboration fun, engaging, and visually captivating.
 
 ## Table of Contents
 
-- [SwiftCode](#swiftcode)
+- [SwiftCodee](#swiftcodee)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
   - [Demo](#demo)
@@ -33,13 +33,13 @@ SwiftCode is an innovative, real-time chat and workspace app designed to help yo
 
 ## Demo
 
-![SwiftCode Demo](./demo/screenshot.png)
+![SwiftCodee Demo](./demo/screenshot.png)
 
-*Check out the live demo [here](https://swiftcode.vercel.app) (if available).*
+*Check out the live demo [here](https://swiftcodee.vercel.app) (if available).*
 
 ## Getting Started
 
-To get started with SwiftCode, clone the repository and install the dependencies. Ensure you have Node.js and npm installed on your machine.
+To get started with SwiftCodee, clone the repository and install the dependencies. Ensure you have Node.js and npm installed on your machine.
 
 ### Prerequisites
 
@@ -53,8 +53,8 @@ To get started with SwiftCode, clone the repository and install the dependencies
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/two/swiftcode.git
-   cd swiftcode
+   git clone https://github.com/two/swiftcodee.git
+   cd swift-code
    ```
 
 2. **Install dependencies:**
@@ -84,12 +84,12 @@ To get started with SwiftCode, clone the repository and install the dependencies
 
 5. **Access the app:**
 
-   Open [http://localhost:3000](http://localhost:3000) in your browser to see SwiftCode in action.
+   Open [http://localhost:3000](http://localhost:3000) in your browser to see SwiftCodee in action.
 
 ## Usage
 
 - **Sign In:**  
-  Click on the "Sign In with Google" button in the sign-in dialog to authenticate. The sign-in dialog features extreme entry/exit animations and a dynamic main heading ("SwiftCode") in a striking green hue.
+  Click on the "Sign In with Google" button in the sign-in dialog to authenticate. The sign-in dialog features extreme entry/exit animations and a dynamic main heading ("SwiftCodee") in a striking green hue.
 
 - **Chat & Code Workspace:**  
   After signing in, you'll be directed to your workspace. Use the chat interface to interact with the AI or collaborators, and view your code updates in real-time.
@@ -134,6 +134,6 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ---
 
-Enjoy building with SwiftCode and feel free to reach out if you have any questions or feedback!
+Enjoy building with SwiftCodee and feel free to reach out if you have any questions or feedback!
 
 ---

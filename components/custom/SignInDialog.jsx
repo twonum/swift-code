@@ -133,7 +133,7 @@ function SignInDialog({ openDialog, closeDialog }) {
                     className="text-4xl font-extrabold text-center"
                     style={{ color: "#ADFA1D" }}
                   >
-                    SwiftCode
+                    SwiftCodee
                   </h1>
                 </motion.div>
                 <motion.div variants={itemVariants} {...pulseTitle}>

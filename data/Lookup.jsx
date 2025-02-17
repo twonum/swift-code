@@ -11,11 +11,11 @@ export default {
   HERO_HEADING: "What do you want to build?",
   HERO_DESC: "Prompt, run, edit, and deploy full-stack web apps.",
   INPUT_PLACEHOLDER: "What do you want to build?",
-  SIGNIN_HEADING: "Continue With SwiftCode",
+  SIGNIN_HEADING: "Continue With SwiftCodee",
   SIGNIN_SUBHEADING:
-    "To use SwiftCode you must log into an existing account or create one.",
+    "To use SwiftCodee you must log into an existing account or create one.",
   SIGNIn_AGREEMENT_TEXT:
-    "By using SwiftCode, you agree to the collection of usage data for analytics.",
+    "By using SwiftCodee, you agree to the collection of usage data for analytics.",
 
   DEFAULT_FILE: {
     "/public/index.html": {
@@ -92,21 +92,21 @@ export default config;
       name: "Starter",
       tokens: "120K",
       value: 120000,
-      desc: "Designed for professionals who need to use SwiftCode a few times per week.",
+      desc: "Designed for professionals who need to use SwiftCodee a few times per week.",
       price: 9.99,
     },
     {
       name: "Pro",
       tokens: "2.5M",
       value: 2500000,
-      desc: "Designed for professionals who need to use SwiftCode a few times per week.",
+      desc: "Designed for professionals who need to use SwiftCodee a few times per week.",
       price: 19.99,
     },
     {
       name: "Unlimted (License)",
       tokens: "Unmited",
       value: 999999999,
-      desc: "Designed for professionals who need to use SwiftCode a few times per week.",
+      desc: "Designed for professionals who need to use SwiftCodee a few times per week.",
       price: 49.99,
     },
   ],

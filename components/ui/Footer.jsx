@@ -167,7 +167,7 @@ export default function Footer() {
 
       {/* Copyright & Links */}
       <motion.p className="text-sm" variants={itemVariants}>
-        &copy; {new Date().getFullYear()} SwiftCode by "M Taha Saleem". All
+        &copy; {new Date().getFullYear()} SwiftCodee by "M Taha Saleem". All
         rights reserved.
       </motion.p>
       <motion.div variants={itemVariants}>
