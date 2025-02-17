@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
@@ -8,7 +8,6 @@ import uuid4 from "uuid4";
 import { api } from "@/convex/_generated/api";
 import { UserDetailsContext } from "@/context/UserDetailsContext";
 import Lookup from "@/data/Lookup";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
 // Container variants for dramatic entry/exit.
@@ -106,45 +105,78 @@ const PulsatingOverlay = () => (
     }}
   />
 );
+
 function LoginPage() {
   const { userDetail, setUserDetail } = useContext(UserDetailsContext);
   const CreateUser = useMutation(api.users.CreateUser);
-  const router = useRouter();
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  // This state controls whether to show the 3-second "Signing In..." after reload.
+  const [postReloadLoading, setPostReloadLoading] = useState(false);
+
+  // On mount, check if the flag is present. If so, show the loading screen for 3 seconds.
+  useEffect(() => {
+    if (localStorage.getItem("postReloadLoading") === "true") {
+      setPostReloadLoading(true);
+      setTimeout(() => {
+        localStorage.removeItem("postReloadLoading");
+        setPostReloadLoading(false);
+      }, 3000);
+    }
+  }, []);
 
   const googleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
-      console.log(tokenResponse);
+      // Immediately disable the button and show the loading state.
+      setIsLoggingIn(true);
+
+      // Retrieve user info from Google.
       const userInfo = await axios.get(
         "https://www.googleapis.com/oauth2/v3/userinfo",
         { headers: { Authorization: "Bearer " + tokenResponse.access_token } }
       );
-      console.log(userInfo);
       const user = userInfo.data;
+
+      // Create the user in your backend.
       await CreateUser({
         name: user?.name,
         email: user?.email,
         picture: user?.picture,
         uid: uuid4(),
       });
+
+      // Save user data locally and in cookies.
       if (typeof window !== "undefined") {
-        // Save the full user object in localStorage.
         localStorage.setItem("user", JSON.stringify(user));
-        // Store only the user's email in the cookie.
         document.cookie = `auth-token=${user.email}; path=/`;
       }
-      setUserDetail(userInfo?.data);
+      setUserDetail(user);
+
+      // Set flag so that after reload the "Signing In..." state is shown.
+      localStorage.setItem("postReloadLoading", "true");
+      // Reload the window immediately.
       window.location.reload();
     },
-    onError: (errorResponse) => console.log(errorResponse),
+    onError: (errorResponse) => {
+      console.log(errorResponse);
+      // Reset the state if an error occurs.
+      setIsLoggingIn(false);
+    },
   });
 
   const handleButtonClick = () => {
-    if (userDetail) {
-      router.push("/");
-    } else {
+    if (!userDetail && !isLoggingIn) {
       googleLogin();
     }
   };
+
+  // After reload, if the flag is present, show the "Signing In..." state.
+  if (postReloadLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-black">
+        <h1 className="text-3xl text-white">Signing In...</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden p-4">
@@ -188,20 +220,27 @@ function LoginPage() {
             </p>
             <motion.button
               onClick={handleButtonClick}
-              className="w-full max-w-md py-4 text-black text-xl bg-[#ADFA1D] hover:bg-white transition duration-300 ease-in-out rounded-none"
-              whileHover={{
-                scale: 1.2,
-                rotate: 3,
-                boxShadow: "0px 0px 20px rgba(173, 250, 29, 0.8)",
-              }}
-              whileTap={{ scale: 0.85, rotate: -3 }}
-              transition={{
-                type: "spring",
-                stiffness: 300,
-                damping: 20,
-              }}
+              disabled={isLoggingIn}
+              className={`w-full max-w-md py-4 text-black text-xl bg-[#ADFA1D] transition duration-300 ease-in-out rounded-none ${
+                isLoggingIn ? "opacity-50 cursor-not-allowed" : "hover:bg-white"
+              }`}
+              whileHover={
+                !isLoggingIn
+                  ? {
+                      scale: 1.2,
+                      rotate: 3,
+                      boxShadow: "0px 0px 20px rgba(173, 250, 29, 0.8)",
+                    }
+                  : {}
+              }
+              whileTap={!isLoggingIn ? { scale: 0.85, rotate: -3 } : {}}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
-              {userDetail ? "Start Building" : "Sign In with Google"}
+              {isLoggingIn
+                ? "Signing In..."
+                : userDetail
+                  ? "Start Building"
+                  : "Sign In with Google"}
             </motion.button>
             <p className="text-center text-sm text-gray-500">
               {Lookup.SIGNIn_AGREEMENT_TEXT}
