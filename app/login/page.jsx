@@ -10,6 +10,7 @@ import { UserDetailsContext } from "@/context/UserDetailsContext";
 import Lookup from "@/data/Lookup";
 import { Button } from "@/components/ui/button";
 import StunningLoader from "@/components/StunningLoader";
+import { useRouter } from "next/navigation";
 
 // Container variants for dramatic entry/exit.
 const containerVariants = {
@@ -108,6 +109,7 @@ const PulsatingOverlay = () => (
 );
 
 function LoginPage() {
+  const router = useRouter();
   const { userDetail, setUserDetail } = useContext(UserDetailsContext);
   const CreateUser = useMutation(api.users.CreateUser);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
@@ -167,6 +169,8 @@ function LoginPage() {
   const handleButtonClick = () => {
     if (!userDetail && !isLoggingIn) {
       googleLogin();
+    } else {
+      router.push("/");
     }
   };
 
