@@ -133,7 +133,7 @@ function LoginPage() {
         document.cookie = `auth-token=${user.email}; path=/`;
       }
       setUserDetail(userInfo?.data);
-      router.push("/");
+      window.location.reload();
     },
     onError: (errorResponse) => console.log(errorResponse),
   });

@@ -163,18 +163,18 @@ function Header() {
           ) : (
             <div className="auth-buttons">
               <Button
+                onClick={() => router.push("/get-started")}
+                variant="secondary"
+                className="get-started-btn"
+              >
+                Start Now
+              </Button>
+              <Button
                 onClick={() => router.push("/login")}
                 variant="secondary"
                 className="signin-btn"
               >
                 Sign In
-              </Button>
-              <Button
-                onClick={() => router.push("/get-started")}
-                variant="secondary"
-                className="get-started-btn"
-              >
-                Get Started
               </Button>
             </div>
           )}
@@ -507,22 +507,33 @@ function Header() {
           }
         }
         @media (max-width: 768px) {
+          .brand {
+            margin-bottom: 1rem;
+          }
           .nav-links {
             display: none;
           }
           .hamburger {
             display: flex;
+            margin-bottom: 0.9rem;
+            margin-left: 1rem;
           }
           .mobile-menu {
             display: block;
           }
           .user-info,
           .auth-buttons {
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            width: 80%;
           }
         }
         @media (max-width: 480px) {
+          .brand {
+            margin-bottom: 1rem;
+          }
           .brand-link {
             font-size: 2.5rem;
           }
@@ -531,10 +542,11 @@ function Header() {
           }
           /* Increase button touch areas and stack them for mobile */
           .auth-buttons {
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
             gap: 1rem;
-            width: 100%;
+            width: 80%;
+            margin-bottom: 1rem;
           }
           .signout-btn,
           .signin-btn,
@@ -542,8 +554,9 @@ function Header() {
             font-size: 1rem;
             padding: 0.75rem 1.25rem;
             width: 100%;
-            max-width: 250px;
+            max-width: 230px;
             text-align: center;
+            margin-bottom: 1rem;
           }
           /* Center user actions on small screens */
           .user-actions {
@@ -555,11 +568,23 @@ function Header() {
           .header-container {
             padding: 1rem 1.5rem;
           }
+          .hamburger {
+            margin-bottom: 0.9rem;
+          }
           .hamburger .bar {
             width: 20px;
             height: 2.5px;
           }
         }
+        /* Apply styles for screens 384px and below */
+        @media screen and (max-width: 384px) {
+          .signout-btn,
+          .signin-btn,
+          .get-started-btn {
+            margin-top: 3rem;
+          }
+        }
+
         /* Extra Decorative Elements */
         .header-decor {
           position: absolute;

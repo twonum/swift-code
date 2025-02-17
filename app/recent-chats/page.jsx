@@ -53,7 +53,7 @@ const SortOptions = ({ sortOrder, toggleSort, disabled }) => (
     animate={{ opacity: 1 }}
     transition={{ duration: 0.4 }}
   >
-    <span className="text-white">Sort Order:</span>
+    <span className="text-white">Order:</span>
     <motion.button
       onClick={toggleSort}
       whileTap={{ scale: 0.9 }}
