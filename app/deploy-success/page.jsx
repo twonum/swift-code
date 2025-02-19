@@ -21,7 +21,7 @@ const DeploySuccessPage = () => {
 
       // Redirect after 6 seconds
       setTimeout(() => {
-        router.back(); // Navigates to the previous page
+        router.push("/"); // Navigates to the previous page
       }, 6000);
     });
   };
